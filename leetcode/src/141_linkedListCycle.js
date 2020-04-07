@@ -29,9 +29,9 @@ function ListNode (val){
 
 // Create linkedlist circle.
 const head1 = new ListNode(3);
-head1.next = new ListNode(2)
-head1.next.next = new ListNode(0)
-head1.next.next.next = new ListNode(-4)
+head1.next = new ListNode(2);
+head1.next.next = new ListNode(0);
+head1.next.next.next = new ListNode(-4);
 head1.next.next.next.next= head1.next;
 
 const hasCycle = (head) => {
@@ -47,7 +47,7 @@ const hasCycle = (head) => {
     slow_p = slow_p.next;
     fast_p = fast_p.next.next;
     if (slow_p == fast_p){
-      return true
+      return true;
     }
   }
   return false;
