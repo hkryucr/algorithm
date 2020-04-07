@@ -23,35 +23,24 @@ Constraints:
 */
 
 function decodeVariations(S) {
-	/**
-	@param S: string
-	@return: integer
-	*/
-  let counter = 0;
-  
-  helper(S, 0)
-  
-  function helper (str, index){
 
-    if(str.length <= index){
-      counter++;
-      return
+  let arr = new Array(S.length + 1);
+  arr[S.length - 1] = 1;
+  arr[S.length] = 1;
+
+  for (let i = S.length - 1; i >= 0; i--) {
+    if (i !== 0 && S[i] === "0" && parseInt(S[i - 1]) > 2) return 0;
+
+    if (i === S.length - 1) {
+      continue;
     }
-    
-    if(str.length >=  index+1){
-      let strNum = parseInt(str.slice(index, index+2));
-      if(strNum <= 26 && strNum > 9 ){
-        helper (str, index+2);
-      } 
-    }
-    if((index == str.length-1) && (str[index] =="0")){
-        return;  
+
+    if (parseInt(S.slice(i, i + 2)) <= 26) {
+      arr[i] = arr[i + 1] + arr[i + 2];
     } else {
-       helper(str, index+1);
+      arr[i] = arr[i + 1];
     }
   }
-  
-  return counter;  
-}
 
-console.log(decodeVariations("1262"))
+  return arr[0];
+}
