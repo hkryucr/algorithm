@@ -64,6 +64,7 @@
 // -----------
 // Let's code!
 // -----------
+
 class Node {
     constructor(val) {
         this.value = val;
@@ -71,43 +72,42 @@ class Node {
     }
 }
 
-// Refactor the regular Stack below into a MinMaxStack!
 class MinMaxStack {
     constructor() {
         this.top = null;
         this.bottom = null;
         this.length = 0;
-        this.min = null; // -2->-1 -> 1
-        this.max = null; // 7 -> 5  
+        // curMin and curMax will be set up as linked lists
+        this.curMin = null;
+        this.curMax = null;
     }
 
-    push(val) {
-        const newNode = new Node(val);
+    push(value) {
+        const newNode = new Node(value);
         if (!this.top) {
             this.top = newNode;
             this.bottom = newNode;
-            this.min = new Node(val);
-            this.max = new Node(val);
+            this.curMin = new Node(value);
+            this.curMax = new Node(value);
         } else {
             const temp = this.top;
             this.top = newNode;
             this.top.next = temp;
-            if (this.min.value > newNode.value){
-                const tempNode = this.min;
-                this.min = new Node(val);  
-                this.min.next = tempNode;
+            if (this.curMin.value > newNode.value){
+                const tempNode = this.curMin;
+                this.curMin = new Node(value);  
+                this.curMin.next = tempNode;
             }
 
-            if (this.max.value < newNode.value) {
-                const tempNode = this.max;
-                this.max = new Node(val);
-                this.max.next = tempNode;
+            if (this.curMax.value < newNode.value) {
+                const tempNode = this.curMax;
+                this.curMax = new Node(value);
+                this.curMax.next = tempNode;
             }
-
         }
         return ++this.length;
     }
-
+    
     pop() {
         if (!this.top) {
             return null;
@@ -115,8 +115,17 @@ class MinMaxStack {
         const temp = this.top;
         if (this.top === this.bottom) {
             this.bottom = null;
+            this.top = null;
+            this.curMin = null;
+            this.curMax = null;
+        } else if (this.top !== this.bottom){
+            if (this.curMax.value === this.top.value) {
+              this.curMax = this.curMax.next;
+            } else if (this.curMin.value === this.top.value) {
+              this.curMin = this.curMin.next;
+            }
+            this.top = this.top.next;
         }
-        this.top = this.top.next;
         this.length--;
         return temp;
     }
@@ -124,8 +133,15 @@ class MinMaxStack {
     size() {
         return this.length;
     }
+
+    min() {
+        return this.curMin;
+    }
+
+    max() {
+        return this.curMax;
+    }
 }
 
-// Forgetting something down here? 
 exports.Node = Node;
 exports.MinMaxStack = MinMaxStack;
