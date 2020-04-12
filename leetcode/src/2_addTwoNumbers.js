@@ -10,49 +10,42 @@ Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807.
 */
 
-var addTwoNumbers = function(l1, l2) {
-    // edge case 
-     if (l1 == null || l2 == null){
-         return null;
-     }
- 
-     helper(l1, l2, 0);
-     return l1;
- }
- 
- // create a new function
- function helper(l1, l2, num){
-     
-     // better to check if next node exist || 
-     let sumNodes = l1.val + l2.val + num;
-     let digit = 0;
-     
-     // sumNodes >= 10
-     if (sumNodes >= 10){
-         digit = 1;
-         sumNodes = sumNodes%10;
-     }
-     
-     // change the value to l1.val;
-     l1.val = sumNodes;
-     
-     // l1.next, l2.next deosn't exist;
-     if (l1.next == null && l2.next==null){
-         if (digit == 0){
-             return
-         } else {
-             const newNode = new ListNode(1);
-             l1.next = newNode;
-             return
-         }        
-     } else if (l1.next == null){
-         const newNode = new ListNode(0);
-         l1.next = newNode;
-     } else if (l2.next == null){
-         const newNode = new ListNode(0);
-         l2.next = newNode;
-     }
-     // recursion
-     helper(l1.next, l2.next, digit);
- }
- 
+const addTwoNumbers = function (l1, l2) {
+    let curNode = l1;
+    let prevSum = 0;
+
+    while (l1 !== null || l2 !== null || prevSum === 1) {
+        let currentSum;
+
+        if (l1 === null && l2 === null) {
+            currentSum = prevSum;
+        } else if (l1 === null) {
+            currentSum = l2.val + prevSum;
+        } else if (l2 === null) {
+            currentSum = l1.val + prevSum;
+        } else {
+            currentSum = l1.val + l2.val + prevSum;
+        }
+
+        prevSum = 0;
+
+        if (currentSum >= 10) {
+            prevSum = 1;
+            currentSum %= 10;
+        }
+
+        l1.val = currentSum;
+
+        if (!l1.next) {
+            if ((l2 && l2.next) || prevSum === 1) {
+                let newNode = new ListNode(0);
+                l1.next = newNode;
+            }
+        }
+
+        l1 = l1.next;
+        if (l2) l2 = l2.next;
+    }
+
+    return curNode;
+}
