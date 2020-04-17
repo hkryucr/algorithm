@@ -63,7 +63,7 @@ const minAreaRect = (points) =>{
             let [px1, py1] = points[i];
             let [px2, py2] = points[j];
 
-            if (px1===px2 || py1 === py2) continue;
+            if (px1 === px2 || py1 === py2) continue;
 
             if (store[px1].has(py2) && store[px2].has(py1)){
                 min = Math.min(min, Math.abs(px1 - px2) * Math.abs(py1 - py2))

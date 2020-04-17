@@ -129,3 +129,4 @@ function heapify(array, length, pIdx) {
 }
 
 console.log(minHeapSort(inputArr));
+
