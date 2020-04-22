@@ -16,37 +16,37 @@ A solution set is:
 ]
 */
 
-const threeSum = (nums) => {
+var threeSum = (arr) => {
+    let outputArray = [];
+    arr.sort((a, b) => a - b);
 
-    nums.sort((a,b) => {return a - b});    
-    
-    let resArr = [];
-    
-    for (let i = 0; i < nums.length - 2; i++){
-        if (nums[i] > 0) {
-			return resArr;
-        }
-        if (nums[i] === nums[i-1]){
-            continue;
-        }
+    for (let i = 0; i < arr.length - 2; i++) {
+        if (arr[i] > 0) break;
+        if (i - 1 >= 0 && arr[i] === arr[i - 1]) continue;
 
-        let j = i+1, 
-            k = nums.length - 1;
-
-        while (j < k){
-            if (nums[i] + nums[j] + nums[k] == 0){
-                    resArr.push([nums[i], nums[j], nums[k]]);
-                    j++;
-                while(nums[j] === nums[j - 1]){
-                    j++;
-                }
+        let left = i + 1;
+        let right = arr.length - 1
+        while (left < right) {
+            if (i < left - 1 && arr[left - 1] === arr[left]) {
+                left++;
+                continue;
             }
-            if (nums[i] + nums[j] + nums[k] > 0){
-                k--;
-            } else if (nums[i] + nums[j] + nums[k] < 0){
-                j++;
+
+            if (right + 1 < arr.length && arr[right + 1] === arr[right]) {
+                right--;
+                continue;
+            }
+            let sum = arr[i] + arr[left] + arr[right];
+            if (sum === 0) {
+                outputArray.push([arr[i], arr[left], arr[right]])
+                left++
+            } else if (sum < 0) {
+                left++
+            } else if (sum > 0) {
+                right--
             }
         }
     }
-    return resArr;
+
+    return outputArray;
 }
