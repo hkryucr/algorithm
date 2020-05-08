@@ -26,40 +26,34 @@ hash =
 [3,3,3,3 ,4,4,4,4,5,5,5,5]
 
 DP = 3 
-dp-> with smaller side, 
-*/
+dp-> with smaller side,                             
+*/                                                   
 
-function canPartition(nums, k){
+var canPartitionKSubsets = function (nums, k) {
+  let sum = nums.reduce((a, b) => a + b);
+  if (sum % k !== 0) return false;
+  let used = new Array(nums.length).fill(false);
+  // let len = nums.length;
+  let oneSide = sum / k;
+  let checkedIdx = 0
+  function dfs(start, side) {
+    if (checkedIdx === nums.length) return true;
+    if (side === 0) return dfs(0, oneSide);
 
-    let sum = nums.reduce((a,b) => a+b);
-    if(sum % k !== 0) return false; 
-    
-    let side = sum / k
-    let arr = new Array(k).fill(side);
-
-    function dfs(arr, targetArr, k, idx) {
-      // Goal is to make every el === 0;
-      if (k === 1) return true;
-      if (arr.length === idx) {
-        if (targetArr.every((el) => el === 0)) return true;
-        return false;
-      }
-      let el = arr[idx];
-      for (let j = 0; j < targetArr.length; j++) {
-        if (targetArr[j] >= el) {
-          targetArr[j] -= el;
-          if (targetArr[j] === 0) k--;
-          if (dfs(arr, targetArr, k, idx+1)) {
-            return true;
-          }
-          k++;
-          targetArr[j] += el;
-        }
-      }
-      return false;
+    for (let j = start; j < nums.length; j++) {
+      if (nums[j] > oneSide) return false;
+      if (used[j]) continue;
+      if (nums[j] > side) continue;
+      used[j] = true;
+      checkedIdx++;
+      if (dfs(j + 1, side - nums[j])) return true;
+      used[j] = false;
+      checkedIdx--;
     }
+    return false;
+  }
 
-    return dfs(nums, arr, k, 0);
+  return dfs(0, oneSide);
 }
 
 const nums1 = [4, 3, 2, 3, 5, 2, 1]

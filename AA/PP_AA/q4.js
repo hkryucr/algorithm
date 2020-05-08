@@ -27,12 +27,36 @@ Your goal is to find the least weight capacity of the ship that will result in a
 // D = # days => max number of partitions array
 
 var shipWithinDays = function(weights, D) {
-    let totalWeight = weights.reduce((a, b) => a + b);
-    let minBound = totalWeight / D;
+    let totalWeight = weights.reduce((a, b) => a + b); //55
+    let heaviest = Math.max(...weights); //10
+    let left = heaviest;
+    let right = totalWeight;
+    
+    while(left < right){
+        let days = 1;
+        let currentWeight = 0;
+        let mid = Math.floor((left + right) / 2);
+        
+        for(let i = 0; i < weights.length; i++){
+            if(currentWeight + weights[i] > mid){
+                days++;
+                currentWeight = weights[i]
+            } else {
+                currentWeight += weights[i]
+            }
+        }
 
-    let sum = 0;
-    let i = 0;
+        if(days > D){
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return left;
 
+    // length of Weights = N
+    // DP -> N^3
+    // N * log()
     // using while loop, will increment the minBound until you find the bound satisfies all weights in D days
     // 11 
     // [1,2,3,4,5,6,7,8,9,10]
@@ -42,7 +66,4 @@ var shipWithinDays = function(weights, D) {
     // [11, 11 ,11 ,11 ,11]
     // if you can't make this within D day  => increment your bound ++
     // with iteration, find how many numbers I can ship in 1 day without hitting minBound
-    while(D > 0){
-
-    }
 }
