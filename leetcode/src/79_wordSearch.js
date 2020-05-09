@@ -71,3 +71,35 @@ const exist = (board, word) => {
 
   return found;
 }
+
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+
+var exist = function (board, word) {
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[0].length; j++) {
+      if (DFS(board, i, j, word, 0)) return true;
+    }
+  }
+  return false;
+};
+
+function DFS(board, i, j, word, idx) {
+  if (idx === word.length - 1 && board[i][j] === word[idx]) return true;
+  if (board[i][j] !== word[idx]) return false;
+
+  const dirs = [[0, 1], [0, -1], [-1, 0], [1, 0]];
+  let cur = board[i][j];
+  board[i][j] = "*";
+  for (let k = 0; k < dirs.length; k++) {
+    const [dirX, dirY] = dirs[k];
+    const [curX, curY] = [dirX + i, dirY + j];
+    if (curX < 0 || curY < 0 || curX >= board.length || curY >= board[0].length || board[curX][curY] === "*") continue;
+    if (DFS(board, curX, curY, word, idx + 1)) return true;
+  }
+  board[i][j] = cur;
+  return false;
+}
