@@ -22,3 +22,27 @@ function balancedBrackets(string) {
 
 console.log(balancedBrackets("([])(){}(())()()"));
 console.log(balancedBrackets("()[]{}{"));
+
+/*
+var isValid = function(s) {
+	let stack = [];
+	
+	for(let i = 0; i < s.length; i++){
+		if(s[i] === '(' || s[i] === '[' || s[i] === '{'){
+			stack.push(s[i]);
+		} else {
+			switch(s[i]){
+				case ')':
+					if(stack.pop() !== '(') return false
+					break;
+				case ']':
+					if(stack.pop() !== '[') return false
+					break;
+				case '}':
+					if(stack.pop() !== '{') return false
+					break;
+			}
+		}
+	}
+	return stack.length === 0;
+};

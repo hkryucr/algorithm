@@ -4,13 +4,13 @@ function groupAnagrams(words) {
 
     for (let i = 0; i < words.length; i++) {
         let cur = words[i];
-        cur = cur.split("").sort().join("");
+        cur = cur.split("").sort().join(""); // depends on length of word(#letters), run comparison between chars in ascending order
         if (hash[cur] === undefined) {
             hash[cur] = [];
         } 
         hash[cur].push(words[i]);
     }
-
+    // O(n) * O(m log m) ==> O(m * n * log(n))  where n is gthe length of array and m is the length of string
     return Object.values(hash);
 }
 

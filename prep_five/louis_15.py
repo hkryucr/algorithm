@@ -8,10 +8,6 @@ def kthSmallest(matrix, k):
         if j + 1 < len(matrix[0]):
             heapq.heappush(matrix[i][j + 1])
         
-
-
-
-
 from queue import PriorityQueue
 
 def kthSmallest(matrix, k):
