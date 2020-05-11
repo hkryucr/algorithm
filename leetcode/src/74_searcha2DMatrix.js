@@ -91,3 +91,31 @@ const searchMatrix = (arr, target) => {
     }
     return false;
 }
+
+const searchMatrix = (arr, target) => {
+
+
+}
+
+/*
+    by rule, matrix rows and columns are sorted in ascending order, BUT not completely sorted
+    start on the first row AND last column
+    logic:
+        if matrix[row][col] (matrix[0][3]) > target
+            column--
+        else matrix[row][col] < target
+            row++
+        else
+            return matrix[row][col]
+
+Input: matrix = [
+ 
+  [10, 11, 22],
+  [23, 30, 31],
+  [32, 34, 36],
+];
+target = 3;
+Output: true;
+
+https://leetcode.com/problems/search-a-2d-matrix/
+https://leetcode.com/problems/search-a-2d-matrix-ii/
