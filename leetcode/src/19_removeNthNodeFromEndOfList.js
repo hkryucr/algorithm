@@ -1,24 +1,8 @@
-/*
-Given a linked list, remove the n-th node from the end of list and return its head.
-
-Example:
-
-Given linked list: 1->2->3->4->5, and n = 2.
-
-After removing the second node from the end, the linked list becomes 1->2->3->5.
-Note:
-
-Given n will always be valid.
-
-Follow up:
-
-Could you do this in one pass?
-*/
 /**
  * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
  * }
  */
 /**
@@ -26,47 +10,51 @@ Could you do this in one pass?
  * @param {number} n
  * @return {ListNode}
  */
-function ListNode(val) {
-  this.val = val;
-  this.next = null;
-}
+// two different ways
+var removeNthFromEnd = function (head, n) {
+  let early = head;
+  let late = head;
 
-const head1 = new ListNode(1);
-head1.next = new ListNode(2)
-head1.next.next = new ListNode(3)
-head1.next.next.next = new ListNode(4)
-head1.next.next.next.next = new ListNode(5)
+  for (let i = 0; i < n; i++) {
+    early = early.next;
+  }
+  if (!early) return late.next;
 
-const removeNthFromEnd = (head, n) => {
-  // check null value
-  if(head == null){
-    return head;
+  while (early.next) {
+    early = early.next;
+    late = late.next;
   }
 
-  // count the length of the linked list;
-  let current = new ListNode(null);
-      current.next = head,
-      counter = 0;
+  late.next = late.next.next;
 
-  while(current.next){
-    counter++;
-    current = current.next;
-  }
+  return head;
 
-  // make it back to the original list;
-  current = new ListNode(null);
-  current.next = head;
-  let temp = current;
+  //     if(!head) return head;
+  //     if(!head.next && n===1) return null;
 
-  // create a temp pointer to count and modify the target node in the list; 
-  while(temp){
-    if(counter - n == 0){
-      temp.next = temp.next.next;
-    } else {
-      temp = temp.next;
-    };
-    counter--;
-  }
+  //     let arr = [];
+  //     let node = head;
+  //     // let i = 0 ;
+  //     while(node){
+  //         arr.push(node);
+  //         node = node.next;
+  //     }
 
-  return current.next;
-}
+  //     let last = arr.length; //4
+  //     let taget = last - n;
+  //     let prev = last - n - 1;
+  //     let next = last - n + 1;
+
+  //     if(prev < 0){
+  //         return arr[next];
+  //     }
+  //     let prevNode = arr[prev];
+  //     if(n === 1){
+  //         prevNode.next = null;
+  //         return head;
+  //     } else {
+  //         let nextNode = arr[next];
+  //         prevNode.next = nextNode;
+  //         return head;
+  //     }
+};
