@@ -7,8 +7,6 @@ Now she wants to rearrange the cards into groups so that each group is size W, a
 
 Return true if and only if she can.
 
-
-
 Example 1:
 
 Input: hand = [1,2,3,6,2,3,4,7,8], W = 3
@@ -20,7 +18,6 @@ Input: hand = [1,2,3,4,5], W = 4
 Output: false
 Explanation: Alice's hand can't be rearranged into groups of 4.
 
-
 Note:
 
 1 <= hand.length <= 10000
@@ -30,9 +27,10 @@ Note:
 */
 /**
  * @param {number[]} hand
- * @param {number} W
+ * @param {number} 
  * @return {boolean}
  */
+
 var isNStraightHand = function (hand, W) {
     if (hand.length % W !== 0) return false;
     hand.sort((a, b) => a - b);
