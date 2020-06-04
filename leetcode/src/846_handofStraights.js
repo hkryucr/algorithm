@@ -53,3 +53,5 @@ var isNStraightHand = function (hand, W) {
 
     return true;
 };
+
+
