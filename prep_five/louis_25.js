@@ -27,33 +27,58 @@ The length of accounts[i][j] will be in the range [1, 30].
  * @param {string[][]} accounts
  * @return {string[][]}
  */
-var accountsMerge = function(accounts) {
-    let d = {}
-    for (let i= 0; i < accounts.length; i++) {
-        let current = accounts[i]
-        let currentName = accounts[0]
-        if (Object.keys(d).includes(currentName)) {
-            // iterate through accounts keyed by currentName
-            let found = false;
-            
-            for (let j = 0; j < d[currentName].length; j++) {
-                let currentEmailSet = d[currentName][j]
-                let currentEmails = current.slice(1)
-                if (currentEmails.some(email => currentEmailSet.has(email))) {
-                    currentEmails.forEach(email => {
-                        currentEmailSet.add(email)
-                    })
+
+function UF(acc) {
+    this.parent = this
+    this.name = acc[0]
+    this.emails = new Set(acc.slice(1))
+}
+
+
+function accountsMerge(accounts) {
+    let accountUfs = []
+    for (let i = 0; i < accounts.length; i++) {
+        const currentAcc = accounts[i]
+        // for each email, if the email is included in a UF, then all emails from this account are added to the uf
+        const emails = currentAcc.slice(1)
+        let foundUf = null
+        let idx = 0
+        
+        while (!foundUf && idx < accountUfs.length) {
+            let currentUf = accountUfs[idx]
+            for (let j = 0; j < emails.length; j++) {
+                let currEmail = emails[j]
+                if (currentUf.name === currentAcc[0] && currentUf.emails.has(currEmail)) {
+                    foundUf = currentUf
                 }
             }
-        } else {
-            let emails = new Set();
-            for (let j = 1; j < current.length; j++) {
-                emails.add(current[j])
-            }
-            d[currentName] = [emails]
+            idx++
         }
+
+        if (foundUf) {
+            // add emails to this uf
+            for (let j = 0; j < emails.length; j++) {
+                foundUf.add(emails[j])
+            }
+        }
+        else {
+            let uf = new UF(currentAcc)
+            accountUfs.push(uf)
+        }
+
     }
-};
+    let result = []
+    for (let i = 0; i < accountUfs.length; i++) {
+        let currentUf = accountUfs[i]
+        let temp = []
+        temp.push(currentUf.name)
+        currentUf.emails.forEach(email => {
+            temp.push(email)
+        })
+        result.push(temp)
+    }
+    return result
+}
 
 /*
 [["David","David0@m.co","David1@m.co"],["David","David3@m.co","David4@m.co"],["David","David4@m.co","David5@m.co"],["David","David2@m.co","David3@m.co"],["David","David1@m.co","David2@m.co"]]
