@@ -84,6 +84,7 @@ Output:
 // [1,2] => [3,1,2] , [1,3,2]
 // k = 0 or 1
 // return curPermute
+
 function permute(array) {
     let permuArr = [[]];
     for(let i = 0; i < array.length; i++){

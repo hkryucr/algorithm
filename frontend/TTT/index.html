@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTT</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        #board{
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            grid-template-rows: repeat(3, 80px);
+            margin-top: 30px;
+            border: 1px solid black;
+        }  
+        .box{
+            border: 1px solid black;
+            text-align: center;
+            line-height: 80px;
+            cursor: pointer;
+        }
+        .winner{
+            margin-top: 1rem;
+            color: red;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h1>TicTacToe</h1>
+    <div class="button-container">
+        <button class="reset-button">RESET</button>
+    </div>
+    <div id="board">
+        <div class="box" id="00" ></div>
+        <div class="box" id="01" ></div>
+        <div class="box" id="02" ></div>
+        <div class="box" id="10" ></div>
+        <div class="box" id="11" ></div>
+        <div class="box" id="12" ></div>
+        <div class="box" id="20" ></div>
+        <div class="box" id="21" ></div>
+        <div class="box" id="22" ></div>
+    </div>
+    <div class="winner"></div>
+    <script src="ttt.js"></script>
+</body>
+</html>
