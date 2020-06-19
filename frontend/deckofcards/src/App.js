@@ -70,7 +70,11 @@ function App() {
     setSelected([]);
     setErrorMsg("");
   }
-
+  const handleDrop =(e)=>{
+    // e.preventDefault();
+    e.preventDefault();
+    console.log(e, "dDrop")
+  }
   return (
     <div className="App">
       <h1>Deck of Cards</h1>
@@ -80,8 +84,24 @@ function App() {
         <button className="submit-button" onClick={handleClick}>Submit</button>
         <button className="reset-button" onClick={resetClick}>Reset</button>
       </div>
-      <div className="cards">
-        {selected.map((card, idx) => <Card className="card" key={idx} card={card}/>)}
+      <div className="all-cards">
+        <div className="sorted-cards"  onDrop={console.log("running drop")}>
+          <div className="sorted-board h"  onDrop={event=>handleDrop(event)}>
+            <span>Heart</span>
+          </div>
+          <div className="sorted-board c"  onDrop={event=>handleDrop(event)}>
+            <span>Clover</span>
+          </div>
+          <div className="sorted-board d"  onDrop={event=>handleDrop(event)}>
+            <span>Diamond</span>
+          </div>
+          <div className="sorted-board s"  onDrop={event=>handleDrop(event)}>
+            <span>Spade</span>
+          </div>
+        </div>
+        <div className="cards">
+          {selected.map((card, idx) => <Card className="card" key={idx} card={card}/>)}
+        </div>
       </div>
     </div>
   );

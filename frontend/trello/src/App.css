@@ -1,0 +1,91 @@
+.App {
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  background-color: #4bbf6b;
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.board{
+  display: flex;
+  width: 100%;
+}
+
+.list {
+  flex-basis: 270px;
+  margin: 6px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  background-color: #ebecf0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.list-title{
+  margin-left: 6px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: 6px;
+}
+
+.list-todos{
+  padding: 0;
+  margin: 0;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: content-box;
+}
+
+.list-todo{
+  list-style-type: none;
+  margin: 6px;
+  min-height: 30px;
+  background-color: white;
+  line-height: 30px;
+  border-radius: 3px;
+  width: 100%;
+  box-shadow: 2px 2px lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-arrow, .right-arrow{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.add-form{
+  margin-top: 6px;
+  padding: 7px;
+  width: 100%;
+}
+
+.add-form > input {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  min-height: 25px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  border: 2px solid rgb(197, 197, 197);
+  line-height: 25px;
+  color: black;
+  padding: 2px 5px;
+}
+.add-form > input:first-child{
+  width: 90%;
+}
+.add-form > input:last-child{
+  line-height: 20px;
+  border: 2px solid rgb(197, 197, 197);
+  margin-top: 10px;
+  cursor: pointer;
+}
+.item{
+  white-space: normal;
+}

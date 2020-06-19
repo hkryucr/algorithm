@@ -25,17 +25,37 @@ body{
   cursor: pointer;
   margin-left: 5px;
 }
+.all-cards{
+  display: flex;
+  flex-direction: column;
+}
+.sorted-cards{
+  display: flex;
+  flex-direction: column;
+  width:100%
+}
+
+.sorted-board{
+  height: 124px;
+  line-height: 124px;
+  width: 100%;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(8, 75px);
   grid-template-rows: repeat(13, 120px);
 }
+
 .card {
   margin: 5px;
   border: 1px solid black;
   border-radius: 4px;
   position: relative;
   padding: 5px;
+  cursor: pointer;
 }
 .card > div > div:first-child{
   margin-left: 1px;

@@ -12,8 +12,18 @@ export default function Card (props){
     } else if (curCard === 13) {
         curCard = "K"
     }
+
+    const handleDragStart=(e)=>{
+        // e.preventDefault();
+        console.log(e.target);
+        e.stopPropagation();
+    }
+    // const handleDrop=(e)=>{
+    //     console.log(e)
+    // }
+
     return (
-        <div className="card">
+        <div className="card" draggable onDragStart={e=>handleDragStart(e)}>
             <div className="card-top">
                 <div>{curCard}</div>
                 <div>{props.card.suit}</div>
