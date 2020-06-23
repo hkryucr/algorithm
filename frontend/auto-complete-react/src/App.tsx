@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import { debounce } from "lodash";
+import _ from "lodash";
 
 declare var searchData: (data: string) => Promise<any>;
 
@@ -13,13 +13,16 @@ function App() {
     event.persist();
     let newInput = event.target.value;
     setInputText(newInput);
-    window.clearTimeout(debounceResize);
-    debounceResize = window.setTimeout(() => {
-      console.log(newInput);
-      searchData(newInput).then((res: any) => {
-        setData(res);
-      });
-    }, 1000);
+    // window.clearTimeout(debounceResize);
+    // debounceResize = window.setTimeout(() => {
+    //   console.log(newInput);
+    //   searchData(newInput).then((res: any) => {
+    //     setData(res);
+    //   });
+    // }, 1000);
+
+    _.debounce(()=>{}, 2000)
+
   };
   
 
