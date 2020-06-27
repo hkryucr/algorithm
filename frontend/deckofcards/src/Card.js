@@ -13,17 +13,22 @@ export default function Card (props){
         curCard = "K"
     }
 
-    const handleDragStart=(e)=>{
+    const handleDragEnter=(e)=>{
         // e.preventDefault();
-        console.log(e.target);
+        console.log(e.target, "dragEnter");
         e.stopPropagation();
     }
     // const handleDrop=(e)=>{
     //     console.log(e)
     // }
 
+    const handleDragOver = (e)=>{
+        e.stopPropagation();
+        e.preventDefault();
+        console.log(e.target, "dragOver")
+    }
     return (
-        <div className="card" draggable onDragStart={e=>handleDragStart(e)}>
+        <div className="card" draggable={true} onDragOver={handleDragOver} onDragEnter={e=>handleDragEnter(e)}>
             <div className="card-top">
                 <div>{curCard}</div>
                 <div>{props.card.suit}</div>

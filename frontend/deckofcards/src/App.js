@@ -72,8 +72,15 @@ function App() {
   }
   const handleDrop =(e)=>{
     // e.preventDefault();
+    e.stopPropagation();
     e.preventDefault();
+
     console.log(e, "dDrop")
+  }
+
+  const handleDragOver = (e)=>{
+    e.preventDefault();
+    // e.stopPropotgation();
   }
   return (
     <div className="App">
@@ -85,17 +92,17 @@ function App() {
         <button className="reset-button" onClick={resetClick}>Reset</button>
       </div>
       <div className="all-cards">
-        <div className="sorted-cards"  onDrop={console.log("running drop")}>
-          <div className="sorted-board h"  onDrop={event=>handleDrop(event)}>
+        <div className="sorted-cards" >
+          <div className="sorted-board h" onDragOver={handleDragOver}  onDrop={event=>handleDrop(event)}>
             <span>Heart</span>
           </div>
-          <div className="sorted-board c"  onDrop={event=>handleDrop(event)}>
+          <div className="sorted-board c"  onDragOver={handleDragOver}  onDrop={event=>handleDrop(event)}>
             <span>Clover</span>
           </div>
-          <div className="sorted-board d"  onDrop={event=>handleDrop(event)}>
+          <div className="sorted-board d"  onDragOver={handleDragOver}  onDrop={event=>handleDrop(event)}>
             <span>Diamond</span>
           </div>
-          <div className="sorted-board s"  onDrop={event=>handleDrop(event)}>
+          <div className="sorted-board s"  onDragOver={handleDragOver}  onDrop={event=>handleDrop(event)}>
             <span>Spade</span>
           </div>
         </div>
