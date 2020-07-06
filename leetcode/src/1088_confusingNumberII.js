@@ -52,6 +52,7 @@ var confusingNumberII = function (N) {
     for (let i = 0; i < possible.length; i++) {
       let nextCurr = curr * 10 + possible[i];
       if (nextCurr <= N && isConfusing(nextCurr)) {
+          console.log(nextCurr);
         count++;
         helper(nextCurr, N);
       } else if (nextCurr > N) {
@@ -76,3 +77,4 @@ var confusingNumberII = function (N) {
 
 // console.log(confusingNumberII(20));//6
 console.log(confusingNumberII(100)); //19
+console.log(confusingNumberII(195)); //37
