@@ -26,33 +26,25 @@ A solution set is:
 ]
 
 */
-
 /**
  * @param {number[]} candidates
  * @param {number} target
  * @return {number[][]}
  */
-const combinationSum = (candidates, target) => {
-  //Create a result array;
-  let result = [];
-  
-  function findElements(n, k){
-    //if the sum of array n equal to k, push it to result.
-    if(n.reduce(function(a,b){return a+b},0) == k){
-      result.push(n);
+var combinationSum = function(candidates, target) {
+    let res = [];
+    helper(0, target, []);
+    function helper(idx, curTarget, curArr){
+        if(curTarget === 0){
+            res.push(curArr.slice());
+            return;
+        }
+        if(curTarget < 0) return;
+        for(let i = idx; i < candidates.length; i++){
+            curArr.push(candidates[i]);
+            helper(i, curTarget-candidates[i], curArr);
+            curArr.pop(candidates[i]);
+        }
     }
-    if (n.reduce(function(a,b){return a+b},0) > k){
-      return
-    }
-
-    // loop through all elements when el is greater than the previous value added to the array
-    candidates.forEach((el)=>{
-      if ((el >= n[n.length-1]) || (n.length ===0)){
-        findElements(n.concat(el), k)
-      }
-    })
-  }
-  findElements([], target)
-
-  return result
+    return res;
 };
