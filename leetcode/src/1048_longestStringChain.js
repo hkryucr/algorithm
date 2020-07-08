@@ -48,26 +48,28 @@ var longestStrChain = function (words) {
     for (let i = 0; i < sortHashKeys.length - 1; i++) {
         let curNum = sortHashKeys[i];
         sortHash[curNum].forEach(el => {
-            if (cou ntHash[el] === undefined) countHash[el] = 1
-    });
+            if (countHash[el] === undefined) countHash[el] = 1
+        });
 
-    let nextNum = sortHashKeys[i + 1];
-    if (nextNum !== curNum + 1) continue;
-    for (let j = 0; j < sortHash[curNum].length; j++) {
-        for (let k = 0; k < sortHash[curNum + 1].length; k++) {
-            if (compareStr(sortHash[curNum][j], sortHash[curNum + 1][k])) {
-                if (countHash[sortHash[curNum + 1][k]] === undefined) countHash[sortHash[curNum + 1][k]] = 1;
-                countHash[sortHash[curNum + 1][k]] = Math.max(countHash[sortHash[curNum][j]] + 1, countHash[sortHash[curNum + 1][k]]);
+        let nextNum = sortHashKeys[i + 1];
+        if (nextNum !== curNum + 1) continue;
+        for (let j = 0; j < sortHash[curNum].length; j++) {
+            for (let k = 0; k < sortHash[curNum + 1].length; k++) {
+                let curNumChar = sortHash[curNum][j]
+                let nextNumChar = sortHash[curNum + 1][k]
+                if (compareStr(curNumChar, nextNumChar)) {
+                    if (countHash[nextNumChar] === undefined) countHash[nextNumChar] = 1;
+                    countHash[nextNumChar] = Math.max(countHash[curNumChar] + 1, countHash[nextNumChar]);
+                }
             }
         }
     }
-}
-let maxCount = 
+    let maxCount = 1
     for (let key in countHash) {
-    maxCount = Math.max(countHash[key], maxCount);
-}
+        maxCount = Math.max(countHash[key], maxCount);
+    }
 
-return maxCount
+    return maxCount
 };
 
 function compareStr(str1, str2) {
@@ -85,31 +87,3 @@ function compareStr(str1, str2) {
     }
     return oneDiff || (!oneDiff && str2.length - str2Idx === 1);
 }
-
-console.log(longestStrChain(["a", "b", "ba", "bca", "bda", "bdca"]))//4
-console.log(longestStrChain(["aa", "bb", "ba", "baa", "bdaa", "bdcaa"]))//
-
-// {
-//     1: ["a", "b"]
-//     2: ["ba"]
-//     3: ["bca", "bda"]
-//     4: ["bdca"]
-// }
-// countHash = 
-// {
-//     "a" : 1
-//     "b" : 1
-//     "ba" : 2,
-//     "bca": 2+1,
-//     "bdca": 4
-// }
-
-// traverse("1")
-// iterate through 
-// 1's -> ["a","b"]              +3
-// 2's -> "ba"
-// 3's -> "bca"
-// 4's -> "bdca"
-// save them as maximum length;
-
-
