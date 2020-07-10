@@ -24,29 +24,27 @@ You must not use any built-in BigInteger library or convert the inputs to intege
  * @return {string}
  */
 
-// var multiply = function(num1, num2) {
-//     let arr = new Array(num1.length + num2.length).fill(0);
-//     let revNum1 = num1.split("").reverse();
-//     let revNum2 = num2.split("").reverse();
-    
-//     for (let i = 0; i < revNum1.length; i++) {
-//         for (let j = 0; j < revNum2.length; j++){
-
-//             let curDigit = i + j;
-//             let curMultiplied = parseInt(revNum1[i]) * parseInt(revNum2[j]);
-//             arr[curDigit] += curMultiplied;
-            
-//             while(arr[curDigit] >= 10){
-//                 let carry = Math.floor(arr[curDigit] / 10);
-//                 arr[curDigit] %= 10;
-//                 arr[curDigit+1] += carry;
-//                 curDigit = curDigit+1;
-//             }
-//         }
-//     }
-//     while(arr.length > 1 && arr[arr.length-1] === 0) arr.pop()
-//     return arr.reverse().join("");
-// };
+var multiply = function (num1, num2) {
+  let arr = new Array(num1.length + num2.length).fill(0);
+  if (num1 === "0" || num2 === "0") return "0";
+  let revNum1 = num1.split("").reverse();
+  let revNum2 = num2.split("").reverse();
+  for (let i = 0; i < revNum1.length; i++) {
+    for (let j = 0; j < revNum2.length; j++) {
+      let curMultiplied = parseInt(revNum1[i]) * parseInt(revNum2[j]);
+      arr[i + j] += curMultiplied;
+    }
+  }
+  let curDigit = 0;
+  while (curDigit < arr.length - 1) {
+    let carry = Math.floor(arr[curDigit] / 10);
+    arr[curDigit] %= 10;
+    arr[curDigit + 1] += carry;
+    curDigit = curDigit + 1;
+  }
+  if (arr[arr.length - 1] === 0) arr.pop();
+  return arr.reverse().join("");
+};
 
 
 var multiply = function (num1, num2){
