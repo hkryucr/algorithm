@@ -34,6 +34,24 @@
  * @ret urn {number} 
  */
 
+// var longestStrChain = function (words) {
+//     dp = {};
+//     words.sort((a, b)=>a.length - b.length);
+//     let res = 0;
+//     for (const word of words) {
+//         let best = 0;
+//         for (let i = 0; i < word.length; i++) {
+//             let prev = word.slice(0, i) + word.slice(i + 1);
+//             if(dp[prev] !== undefined){
+//                 best = Math.max(best, dp[prev]);                    
+//             }
+//         }
+        
+//         dp[word] = best+1;
+//         res = Math.max(res, best+1);
+//     }
+//     return res;
+// };
 var longestStrChain = function (words) {
     if (words.length === 0) return 0;
     let sortHash = {};
