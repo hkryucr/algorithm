@@ -5,9 +5,17 @@ car dog race walker racecar dogwalker
 
 racecar
 
-rac
-race
-racec
+rac ecar
+race car
+racec ar
+
+"ar"
+"ecar"
+"rac" 
+"race"
+"racec"
+   vvv
+"racecar"
 
 */
 const shortestCombinationWord = (array) => {
