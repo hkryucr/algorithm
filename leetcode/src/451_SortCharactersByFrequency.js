@@ -36,3 +36,29 @@ Explanation:
 Note that 'A' and 'a' are treated as two different characters.
 
 */
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var frequencySort = function(s) {
+    let hash = {}
+    for(let i = 0; i < s.length; i++){
+        if(hash[s[i]] === undefined) hash[s[i]] = 0;
+        hash[s[i]] ++;
+    }
+    let numHash = {};
+    for(let key in hash){
+        if(numHash[hash[key]] === undefined) numHash[hash[key]] = [];
+        numHash[hash[key]].push(key);
+    }
+    let str = "";
+    for(let key of Object.keys(numHash).sort((a,b)=>b-a)){
+        let curArr = numHash[key];
+        curArr.forEach(el => {
+            for(let i = key; i > 0; i--){
+                str += el;    
+            }
+        })
+    }
+    return str;    
+};
