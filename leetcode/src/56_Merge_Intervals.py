@@ -26,7 +26,6 @@ class Solution(object):
         for i in range(1, len(sorted_intervals)):
             [start, end] = sorted_intervals[i]
             if start <= cur_right:
-                # cur_left = start
                 cur_right = max(end, cur_right)
             else:
                 res.append([cur_left, cur_right])
