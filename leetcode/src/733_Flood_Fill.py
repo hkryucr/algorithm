@@ -38,43 +38,19 @@ class Solution(object):
         :type newColor: int
         :rtype: List[List[int]]
         """
-        
+        if image[sr][sc] == newColor:
+            return image
         queue = deque()
         queue.append((sr, sc))
-        visited = set()
         original = image[sr][sc]
-        while len(queue):
-            cur_x, cur_y = queue.popleft()
-            image[cur_x][cur_y] = newColor
-            
-            for new_x, new_y in [(cur_x, cur_y+1), (cur_x, cur_y-1), (cur_x+1, cur_y), (cur_x-1, cur_y)]:
-                if 0<=new_x<len(image) and 0<=new_y<len(image[0]) and image[new_x][new_y] == original and not (new_x, new_y) in visited:
-                    visited.add((new_x, new_y))
-                    queue.append((new_x, new_y))
-        return image
-    from collections import deque
-
-class Solution(object):
-    def floodFill(self, image, sr, sc, newColor):
-        """
-        :type image: List[List[int]]
-        :type sr: int
-        :type sc: int
-        :type newColor: int
-        :rtype: List[List[int]]
-        """
+        image[sr][sc] = newColor
         
-        queue = deque()
-        queue.append((sr, sc))
-        visited = set()
-        original = image[sr][sc]
         while len(queue):
             cur_x, cur_y = queue.popleft()
-            image[cur_x][cur_y] = newColor
-            
             for new_x, new_y in [(cur_x, cur_y+1), (cur_x, cur_y-1), (cur_x+1, cur_y), (cur_x-1, cur_y)]:
-                if 0<=new_x<len(image) and 0<=new_y<len(image[0]) and image[new_x][new_y] == original and not (new_x, new_y) in visited:
-                    visited.add((new_x, new_y))
+                if 0<=new_x<len(image) and 0<=new_y<len(image[0]) and image[new_x][new_y] == original:
+                    image[new_x][new_y] = newColor
                     queue.append((new_x, new_y))
         return image
+    
     
