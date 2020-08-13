@@ -17,7 +17,6 @@ board =
 Given word = "ABCCED", return true.
 Given word = "SEE", return true.
 Given word = "ABCB", return false.
- 
 
 Constraints:
 
