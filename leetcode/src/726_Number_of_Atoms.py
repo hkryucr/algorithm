@@ -38,70 +38,45 @@ The length of formula will be in the range [1, 1000].
 formula will only consist of letters, digits, and round parentheses, and is a valid formula as defined in the problem.
 
 '''
-
+import re
 from collections import defaultdict
 class Solution:
     def countOfAtoms(self, formula: str) -> str:
-        # atoms = re.findall("[A-Z]{1}[a-z]?|[0-9]+|[\(\)]", formula)
+        arr = re.findall("[A-Z]{1}[a-z]?|[0-9]+|[\(\)]", formula)
         stack = []
         i = 0
-        while i < len(formula):
-            char = formula[i]
-            if char.isdigit():
-                num_str = ""
-                while( i < len(formula) and formula[i].isdigit()):
-                    num_str += formula[i]
-                    i+=1
-                stack.append(int(num_str))
-                
-            elif char.isupper():
-                if i-1 >= 0 and not type(stack[-1]) == int and stack[-1] != "(": stack.append(1)
-                if i+1 < len(formula) and formula[i+1].islower():
-                    stack.append(char+formula[i+1])
-                    i+=1
-                else:
-                    stack.append(char)
-                i+=1
-            elif char == "(":
-                if i-1 >= 0 and not type(stack[-1]) == int and stack[-1] != "(": stack.append(1)
-                stack.append(char)
-                i+=1
-                
-            elif char == ")":
-                if i-1 >= 0 and not type(stack[-1]) == int and stack[-1] != "(": stack.append(1)
+        while i < len(arr):
+            el = arr[i]
+            if el.isdigit():
+                stack.append(int(el))
+            elif el == ")":
                 temp = []
-                number = 1
-                i+=1
-                
-                if i < len(formula) and formula[i].isdigit():
-                    num_str = ""
-                    while(i < len(formula) and formula[i].isdigit()):
-                        num_str += formula[i]
-                        i+=1
-                    number = int(num_str)
-                
+                multiplier = 1
+                if i+1 < len(arr) and arr[i+1].isdigit():
+                    multiplier *= int(arr[i+1])
+                    i+=1
                 while True:
                     popped = stack.pop()
-                    if popped == "(": break
-                    if type(popped) == int:
-                        popped = popped * number
+                    if popped == "(":
+                        break
+                    if type (popped) == int:
+                        popped *= multiplier
                     temp.append(popped)
-                            
-                for el in reversed(temp): 
-                    stack.append(el)
-                
-        if type(stack[-1]) != int:
-            stack.append(1)
-        
-        num_dict = defaultdict(lambda: 0)
-        for i in range(0,len(stack),2):
-            num_dict[stack[i]] += stack[i+1]
+                stack.extend(reversed(temp))
+            else:
+                stack.append(el)
+            i+=1
+        if type(stack[-1])!= int: stack.append(1)
+        atom_dict = defaultdict(lambda: 0)
+        for i, el in enumerate(stack):
+            if(i % 2 == 0): continue
+            atom_dict[stack[i-1]] += stack[i] 
         res = ""
 
-        for (char, count) in (sorted(num_dict.items())):
-            if count == 1:
-                res += char
-            else:
-                res += (char + str(count))
+        for (atom, count) in sorted(atom_dict.items()):
+            res += atom
+            if count != 1:
+                res += str(count)
         return res
+
         
