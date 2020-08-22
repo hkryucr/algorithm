@@ -79,146 +79,66 @@ are persisted across multiple test cases. Please see here for more details.
 "i love leetcode" : 2 times
 
 '''
+import heapq
 
-class AutocompleteSystem(object):
-  def __init__(self, sentences, times):
-      self.trie = {}
-      for i, sentence in enumerate(sentences):
-        self.insert(sentence, times[i])
-      self.cur_str = ""
-        
-  def insert(self, sentence, time):
-    cur_node = self.trie
-    for char in sentence:
-      if not char in cur_node:
-        cur_node[char] = {}
-        cur_node[char]["words"] = []
-      
-      cur_node = cur_node[char]
-      cur_node["words"].append((time, sentence))
-    cur_node["terminal"] = True
+class AutocompleteSystem:
+    def __init__(self, sentences: List[str], times: List[int]):
+        self.trie = {}
+        self.cur_str = ""
+        self.cur_node = None
+        for i, sentence in enumerate(sentences):
+            self.insert(sentence, times[i])
     
-  def input(self, c):
-    if c == "#":
-      self.insert(self.cur_str, 1)
-      return []
-    # print self.cur_str
-    self.cur_str += c
-    if not self.cur_str in self.trie: 
-      return []
-    return map(lambda x: x[1], sorted(self.trie[self.cur_str]["words"], key= lambda x: (-x[0], x[1])))[:3]
+    
+    def insert(self, sentence, time):
+        node = self.trie
+        for char in sentence:
+            if not char in node:
+                node[char] = {}
+            node = node[char]
+        if "terminal" in node:
+            prev_time, sentence = node["terminal"]
+            node["terminal"] = (time+prev_time, sentence)
+        else:
+            node["terminal"] = (time, sentence)
 
-obj = AutocompleteSystem(["i love you", "island","ironman", "i love leetcode"], [5,3,2,2])
-print obj.input("i")
-print obj.input(" ")
-print obj.input("a")76. Minimum Window Substring
-
-print obj.input("#")
-# print obj.input("i") # i should have i ..
-print obj.trie["i"][" "]["words"]
-
-# Operation: input('a')
-
-# print obj.trie["i"]["s"]
+    def input(self, c: str) -> List[str]:
+        if c == "#":
+            self.insert(self.cur_str, 1)
+            self.cur_str = ""
+            self.cur_node = None
+            return []
+        
+        node = self.trie
+        if self.cur_node != None:
+            node = self.cur_node
+        
+        if not c in node:
+            node[c] = {}
+            
+        node = node[c]
+        self.cur_str += c
+        self.cur_node = node
+        
+        word_list = []
+        self.find_all(node, word_list)
+        res = []
+        
+        for _ in range(3):
+            if len(word_list) == 0: break
+            (cur_time, word) = heapq.heappop(word_list)
+            res.append(word)
+        return res
+    
+    def find_all(self, node, word_list):
+        if "terminal" in node:
+            (time, sentence) = node["terminal"]
+            heapq.heappush(word_list, (time, sentence))
+            
+        for key in node:
+            if key != "terminal":
+                self.find_all(node[key], word_list)
 
 # Your AutocompleteSystem object will be instantiated and called as such:
 # obj = AutocompleteSystem(sentences, times)
 # param_1 = obj.input(c)
-
-
-
-# //trie solution in java
-# class Node {
-#   String sentence;
-#   int times;
-
-#   Node(String st, int t) {
-#     sentence = st;
-#     times = t;
-#   }
-# }
-
-# class Trie {
-#   int times;
-#   Trie[] branches = new Trie[27];
-# }
-
-# class AutocompleteSystem {
-#   private Trie root;
-#   private String cur_sent = "";
-
-#   public AutocompleteSystem(String[] sentences, int[] times) {
-#     root = new Trie();
-#     for (int i = 0; i < sentences.length; i++) {
-#       insert(root, sentences[i], times[i]);
-#     }
-#   }
-
-#   private int toInt(char c) {
-#     return c == ' ' ? 26 : c - 'a';
-#   }
-
-#   private void insert(Trie t, String s, int times) {
-#     for (int i = 0; i < s.length(); i++) {
-#       if (t.branches[toInt(s.charAt(i))] == null) {
-#         t.branches[toInt(s.charAt(i))] = new Trie();
-#       }
-#       t = t.branches[toInt(s.charAt(i))];
-#     }
-#     t.times += times;
-#   }
-
-#   private List<Node> lookup(Trie t, String s) {
-#     List<Node> list = new ArrayList<>();
-#     for (int i = 0; i < s.length(); i++) {
-#       if (t.branches[toInt(s.charAt(i))] == null) {
-#         return new ArrayList<>();
-#       }
-#       t = t.branches[toInt(s.charAt(i))];
-#     }
-#     traverse(s, t, list);
-#     return list;
-#   }
-
-#   private void traverse(String s, Trie t, List<Node> list) {
-#     if (t.times > 0) list.add(new Node(s, t.times));
-#     for (char i = 'a'; i <= 'z'; i++) {
-#       if (t.branches[i - 'a'] != null) {
-#         traverse(s + i, t.branches[i - 'a'], list);
-#       }
-#     }
-#     if (t.branches[26] != null) {
-#       traverse(s + ' ', t.branches[26], list);
-#     }
-#   }
-
-#   public List<String> input(char c) {
-#     List<String> res = new ArrayList<>();
-#     if (c == '#') {
-#       insert(root, cur_sent, 1);
-#       cur_sent = "";
-#     } else {
-#       cur_sent += c;
-#       List<Node> list = lookup(root, cur_sent);
-#       Collections.sort(
-#           list,
-#           (a, b) -> a.times == b.times ? a.sentence.compareTo(b.sentence) : b.times - a.times);
-#       for (int i = 0; i < Math.min(3, list.size()); i++) res.add(list.get(i).sentence);
-#     }
-#     return res;
-#   }
-# }   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
