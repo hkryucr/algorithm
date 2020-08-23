@@ -50,15 +50,29 @@ No user visits two websites at the same time.
 from collections import defaultdict
 
 class Solution:
-  def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
-    user_visited_dict = defaultdict(lambda: set())
-    number_visited_websited_by_users = defaultdict(lambda: )
-    for i, name in enumerate(username):
-      user_visited_dict[name].add(website[i])
-      
+    def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
+        user_dict = defaultdict(lambda: list())
+        for i, name in enumerate(username):
+            user_dict[name].append((timestamp[i], website[i]))
         
+        sequence_dict = defaultdict(lambda: 0)
 
+        for user, user_list in user_dict.items():
+            if len(user_list) < 3: continue
+            arr = sorted(user_list)
+            visited = set()
+            for i in range(0, len(arr) - 2):
+                for j in range(i+1, len(arr) - 1):
+                    for k in range(j+1, len(arr)):
+                        cur_tuple = (arr[i][1], arr[j][1], arr[k][1])
+                        if cur_tuple in visited:
+                            continue
+                        visited.add(cur_tuple)
+                        sequence_dict[cur_tuple] += 1
 
+        return sorted(sequence_dict, key=lambda x: (-sequence_dict[x], x))[0]
+ 
+                
 
 
 
